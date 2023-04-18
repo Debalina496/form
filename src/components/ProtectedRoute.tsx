@@ -1,14 +1,18 @@
-import { useEffect } from "react";
+import { ComponentType, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const ProtectedRoute = (props: any) => {
-    const navigate = useNavigate();
-    console.log(props)
     const Component = props.component;
+    const navigate = useNavigate();
+
+    const isLogin = useSelector((state: Record<string, any>) => state.reducers.isLoggedIn);
+    console.log("calling protected", isLogin);
+    
+    
 
     useEffect(() => {
-        const login = localStorage.getItem('login');
-        if(!login) {
+        if(!isLogin) {
             navigate('/');
         }
     })

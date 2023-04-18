@@ -10,11 +10,17 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { isLogedIn } from "../redux/actions";
 
 export default function Login() {
+  console.log("calling login");
+  
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('')
+
+    const dispatch = useDispatch();
 
     const handleLogin = async(event: any) => {
         event.preventDefault();
@@ -25,7 +31,7 @@ export default function Login() {
         }
         await axios.post("/api/login", data)
         .then((response: any) => {
-            localStorage.setItem('login', 'true');
+            dispatch(isLogedIn(true));
             navigate('/home');
         })
         .catch((err: any) => {
