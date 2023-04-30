@@ -10,6 +10,8 @@ const Notification = () => {
   const dispatch = useDispatch();
   let notification: any = {};
 
+  const savedNotifications: Array<Record<any, any>> = useSelector((store: Record<any, any>) => store.reducers.notification)
+
   useEffect(() => {
     const socket = io('https://demo-api.pritamdas.com');
     socket.emit('notification:subscribe');
@@ -19,25 +21,23 @@ const Notification = () => {
       dispatch(saveNotification(data));
       setNewNotification(data);
     });
-
     return () => {
         socket.disconnect();
     };
-}, []);
+}, [newNotification]);
 
   return (
     <div>
       <h1>Notification Data</h1>
-      <ul>
         {
-             Object.entries(newNotification)?.map(([key, value]) => {
-                return (<>
-                    <li>{`${key} : ${value}`}</li>
-                    </>
-                )
-            })
+          savedNotifications.map((notificationItem: Record<any, any>, index: number) => {
+            return (
+              <ul>
+                {Object.entries(notificationItem)?.map(([key, value]) => <li>{`${key} : ${value}`}</li>)}
+              </ul>
+            )
+          })
         }
-      </ul>
     </div>
   );
 };

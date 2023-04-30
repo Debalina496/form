@@ -7,7 +7,7 @@ const ProtectedRoute = (props: any) => {
     const navigate = useNavigate();
 
     const isLogin = useSelector((state: Record<string, any>) => state.reducers.isLoggedIn);
-    console.log("calling protected", isLogin);
+    // console.log("calling protected", isLogin);
     
     
 
@@ -19,7 +19,7 @@ const ProtectedRoute = (props: any) => {
 
     return (
         <>
-            <Component />
+            {isLogin && <Component />}
         </>
 
 

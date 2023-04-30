@@ -34,7 +34,7 @@ export default function UpdateProfile() {
         "name" : name
     })
     .then((res: any) => {
-        setMessage(res.message);
+        setMessage(res.data.message);
         setApiSuccess(true);
     })
     .catch((err: any) => {
